@@ -1,0 +1,10 @@
+account_types:
+user_types:
+roles:
+  superuser:
+    can:
+      manage:
+        - all
+role_groups:
+licenses:
+users:

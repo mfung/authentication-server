@@ -1,0 +1,19 @@
+- title "Manage Applications"
+
+%div
+  = link_to "Add Application", new_admin_app_path
+
+%table
+  %tr
+    %td Application Name
+    %td ID (app_id)
+    %td Secret (app_secret)
+  - if @apps  
+    - @apps.each do |app|
+      %tr
+        %td= link_to "#{app.name}", edit_admin_app_path(:id => app.id)
+        %td= "#{app.app_id}"
+        %td= "#{app.app_secret}"      
+  - else
+    %tr
+      %td{:colspan=>3}= No Records Found

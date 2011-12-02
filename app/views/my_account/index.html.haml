@@ -1,0 +1,13 @@
+Inside Test
+%br
+= current_user.email
+%br
+= current_user.roles
+%br
+
+- if can?(:manage, User)
+  %p
+    Hello World
+  
+%p
+  End

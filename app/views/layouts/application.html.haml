@@ -1,0 +1,41 @@
+!!! Strict
+%html
+  %head
+    %title= content_for?(:title) ? yield(:title) : "Untitled"
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = yield(:head)
+    
+  %body
+  
+    %div#user_info
+      - if current_user
+        %span.fullname= "Name: #{current_user.fullname}"
+        %span.email= "Email: #{current_user.email}"
+        %span.role= "Account Type: #{current_user.roles.join.to_s.humanize}"
+
+    %div#menu
+      %ul
+        - if current_user
+          - if current_user.has_role?(:superuser)
+            %li
+              = link_to "Mange Applications", admin_apps_path
+          - if current_user.has_role?(:superuser) || current_user.has_role?(:admin)
+            %li
+              = link_to "Mange Users", admin_users_path
+          %li
+            = link_to "Edit My Account", edit_my_account_path(:id => current_user.id)
+          %li
+            = link_to "Sign Out", destroy_user_session_path
+        - else
+          %li
+            = link_to "Sign In", new_user_session_path
+    
+    %div#container
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}"
+    
+    = content_tag :h1, yield(:title) if show_title?
+    = yield
+  

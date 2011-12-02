@@ -1,0 +1,16 @@
+= form_for [:admin, @app], :url => {:action => (@app.new_record? ? :create : :update)} do |f|
+  = f.error_messages
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+  %p
+    = f.label :uri
+    %br
+    = f.text_field :uri
+  %p
+    = f.label :remote_roles_path
+    %br
+    = f.text_field :remote_roles_path
+  %p
+    = f.submit (@app.new_record? ? "Add Application" : "Update")
