@@ -4,11 +4,14 @@ class AuthorizeController < ApplicationController
   
   def authorize
     AccessGrant.prune!
-    
-    # need to add code here to check to see if user has rights for application
-    
-    access_grant = current_user.access_grants.create(:client => application)
-    redirect_to access_grant.redirect_uri_for(params[:redirect_uri])
+    client = Client.find_by_app_id(params[:client_id])
+    if current_user.access_rights.find_by_client_id(client.id)
+      access_grant = current_user.access_grants.create(:client => application)
+      redirect_to access_grant.redirect_uri_for(params[:redirect_uri])
+    else
+      redirect_to root_path, :notice => 'You do not have access to that application.'
+    end
+
   end
   
   def access_token

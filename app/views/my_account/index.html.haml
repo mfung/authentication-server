@@ -1,13 +1,3 @@
-Inside Test
-%br
-= current_user.email
-%br
-= current_user.roles
-%br
+- title "Account Information"
 
-- if can?(:manage, User)
-  %p
-    Hello World
-  
-%p
-  End
+= render 'account_info'
