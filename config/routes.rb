@@ -20,6 +20,7 @@ Authentication::Application.routes.draw do
     match '/users/remove_app/:id/with_user/:user_id' => 'users#remove_app', :via => :get, :as => 'users_remove_app'
     match '/users/remove_apps' => 'users#remove_apps', :via => :post
     match '/apps/sync_roles' => 'apps#sync_roles'
+    match '/users/change_role' => 'users#change_role', :via => :post
   end
   
   resources :apps

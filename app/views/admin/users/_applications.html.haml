@@ -13,7 +13,13 @@
         - @user.clients.sort_by(&:name).each do |client|
           %tr
             %td= "#{client.name}"
-            %td= "#{client.access_rights.find_by_user_id(@user.id).roles}"
+            //%td= "#{client.access_rights.find_by_user_id(@user.id).roles}"
+            %td
+              = form_for :user, :url => admin_users_change_role_path, :remote => true, :html => {:name => "user_apps_#{client.id}"} do |f2|
+                = hidden_field_tag :user_id, @user.id
+                = hidden_field_tag :client_id, client.id
+                - if client.roles
+                  = f.select :roles, client.roles.split(',').collect {|p| [ p.humanize, p ] }, {:selected => client.access_rights.find_by_user_id(@user.id).roles, :include_blank => true}, {:onchange => "document.forms['user_apps_#{client.id}'].submit()", :class => 'chzn-select'}
             %td= link_to 'Delete', admin_users_remove_app_path(:id => client.id, :user_id => @user.id), :confirm => "Are you sure?"
             %td= check_box_tag('client_ids[]', client.id, false, {:id => "client_"})
         %tr

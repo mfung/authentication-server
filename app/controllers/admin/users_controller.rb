@@ -67,6 +67,14 @@ class Admin::UsersController < ApplicationController
     redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully removed Application(s).'
   end
   
+  def change_role
+    @user = User.find_by_id(params[:user_id])
+    ar = @user.access_rights.find_by_client_id(params[:client_id])
+    ar.roles = params[:clients][:roles]
+    ar.save
+    redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully changed User Role.'
+  end
+  
   private
   
   def remove_apps_access_grants_and_rights(user_id, client_id)
