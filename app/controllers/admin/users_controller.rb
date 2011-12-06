@@ -12,7 +12,7 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      session[:user_id] = @user.id
+      #session[:user_id] = @user.id
       redirect_to admin_users_path, :notice => "You successfully created an account."
     else
       render :action => 'new'
@@ -20,7 +20,8 @@ class Admin::UsersController < ApplicationController
   end
   
   def edit
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
+    @apps = Client.all - @user.clients
   end
   
   def update
@@ -34,6 +35,37 @@ class Admin::UsersController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+  
+  def add_apps
+    @user = User.find_by_id(params['clients']['user'])
+    
+    if params['clients']['id']
+      params['clients']['id'].each do |client_id|
+        client = Client.find(client_id)
+        @user.clients << client unless @user.clients.find_by_id(client.id)
+      end
+    
+      if @user.save
+        redirect_to edit_admin_user_path(:id => @user.id)
+      end
+    else
+      redirect_to edit_admin_user_path(:id => @user.id), :notice => 'Please select an Application.'
+    end
+  end
+  
+  def remove_app
+    user_id = params[:user_id]
+    client_id = params[:id]
+    
+    AccessGrant.delete_all("user_id = ? AND client_id = ?", user_id, client_id)
+    AccessRight.delete_all("user_id = ? AND client_id = ?", user_id, client_id)
+    
+    redirect_to edit_admin_user_path(:id => user_id), :notice => 'Successfully removed Application(s).'
+  end
+  
+  def remove_apps
+    
   end
   
 end

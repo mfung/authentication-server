@@ -14,6 +14,10 @@ class Client < ActiveRecord::Base
     self.app_id, self.app_secret = SecureRandom.hex(16), SecureRandom.hex(16)
   end
   
+  def name_with_id
+    "#{self.id}: #{self.name}"
+  end
+  
   private
   def filter_remote_roles_path
     self.remote_roles_path = ("/" + self.remote_roles_path) if self.remote_roles_path[0] != '/' 

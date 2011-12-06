@@ -38,16 +38,21 @@ class AuthorizeController < ApplicationController
   end
   
   def user
+    client = AccessGrant.find_by_access_token(params['access_token']).client
+    role = AccessRight.find_by_user_id_and_client_id(current_user.id, client.id).roles
+    data_hash = Digest::MD5.hexdigest(current_user.serialize_data.to_s + "|Role:" + role.to_s + "|Client:" + client.id.to_s)
+    
     hash = {
       :provider   => 'exteres',
       :uid        => current_user.id.to_s,
       :user_info  => { :name => current_user.email },
       :extra      => {
-        :admin => current_user.admin?,
+        :status => current_user.status,
         :first_name => current_user.first_name,
         :last_name => current_user.last_name,
         :department => current_user.department,
-        :roles => current_user.roles
+        :role => role,
+        :data_hash => data_hash
       }
     }
     render :json => hash.to_json

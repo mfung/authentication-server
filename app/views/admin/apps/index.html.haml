@@ -8,8 +8,8 @@
     %td Application Name
     %td ID (app_id)
     %td Secret (app_secret)
-  - if @apps  
-    - @apps.each do |app|
+  - if @apps
+    - @apps.sort_by(&:name).each do |app|
       %tr
         %td= link_to "#{app.name}", edit_admin_app_path(:id => app.id)
         %td= "#{app.app_id}"

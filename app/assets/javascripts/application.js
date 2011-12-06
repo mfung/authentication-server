@@ -7,3 +7,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require chosen.jquery.min.js
+
+jQuery(function($){
+    $('.chzn-select').chosen();
+});

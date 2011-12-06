@@ -15,6 +15,10 @@ Authentication::Application.routes.draw do
   namespace :admin do
     resources :users
     resources :apps
+    
+    match '/users/add_apps' => 'users#add_apps'
+    match '/users/remove/app/' => 'users#remove_app'
+    match '/users/remove_apps' => 'users#remove_apps'
   end
   
   resources :apps

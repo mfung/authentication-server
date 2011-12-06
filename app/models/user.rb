@@ -37,5 +37,9 @@ class User < ActiveRecord::Base
     self.expiration_date = 1.year.from_now
   end
   
+  def serialize_data
+    "Email:" + self.email.to_s + "|Name:" + self.first_name.to_s + self.last_name + "|Status:" + self.status.to_s + "|Department:" + self.department.to_s
+  end
+  
 end
 
