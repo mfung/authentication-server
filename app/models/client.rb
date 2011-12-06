@@ -5,6 +5,7 @@ class Client < ActiveRecord::Base
   before_create :generate_fields
   before_validation :filter_remote_roles_path, :only => [:create, :update]
   validates_presence_of :name, :on => :create
+  validates_uniqueness_of :uri
   
   def self.authenticate(app_id, app_secret)
     where(["app_id = ? AND app_secret = ?", app_id, app_secret]).first

@@ -1,3 +1,9 @@
 - title "Edit Application"
 
 = render "form"
+
+%h2== Roles
+
+= form_for :client, :url => admin_apps_sync_roles_path do |f|
+  = f.hidden_field :id, :value => @app.id
+  = f.submit "Sync Roles", :confirm => 'This feature will update Roles only on the Application, User Roles will need to be updated manually.'

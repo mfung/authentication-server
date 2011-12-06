@@ -54,18 +54,24 @@ class Admin::UsersController < ApplicationController
     end
   end
   
-  def remove_app
-    user_id = params[:user_id]
-    client_id = params[:id]
-    
-    AccessGrant.delete_all("user_id = ? AND client_id = ?", user_id, client_id)
-    AccessRight.delete_all("user_id = ? AND client_id = ?", user_id, client_id)
-    
-    redirect_to edit_admin_user_path(:id => user_id), :notice => 'Successfully removed Application(s).'
+  def remove_app    
+    remove_apps_access_grants_and_rights(params[:user_id], params[:id])
+    redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully removed Application(s).'
   end
   
-  def remove_apps
+  def remove_apps    
+    params[:client_ids].each do |client_id|
+      remove_apps_access_grants_and_rights(params[:user_id], client_id)
+    end
     
+    redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully removed Application(s).'
+  end
+  
+  private
+  
+  def remove_apps_access_grants_and_rights(user_id, client_id)
+    AccessGrant.delete_all(["user_id = ? AND client_id = ?", user_id, client_id])
+    AccessRight.delete_all(["user_id = ? AND client_id = ?", user_id, client_id])
   end
   
 end

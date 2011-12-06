@@ -16,9 +16,10 @@ Authentication::Application.routes.draw do
     resources :users
     resources :apps
     
-    match '/users/add_apps' => 'users#add_apps'
-    match '/users/remove/app/' => 'users#remove_app'
-    match '/users/remove_apps' => 'users#remove_apps'
+    match '/users/add_apps' => 'users#add_apps', :via => :post
+    match '/users/remove_app/:id/with_user/:user_id' => 'users#remove_app', :via => :get, :as => 'users_remove_app'
+    match '/users/remove_apps' => 'users#remove_apps', :via => :post
+    match '/apps/sync_roles' => 'apps#sync_roles'
   end
   
   resources :apps

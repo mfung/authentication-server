@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111202205426) do
+ActiveRecord::Schema.define(:version => 20111206182313) do
 
   create_table "access_grants", :force => true do |t|
     t.string   "code"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(:version => 20111202205426) do
     t.datetime "updated_at"
     t.string   "uri"
     t.string   "remote_roles_path"
+    t.string   "roles"
+    t.string   "roles_hash"
   end
 
   create_table "roles", :force => true do |t|
