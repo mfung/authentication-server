@@ -45,5 +45,6 @@ group :development, :test do
   gem 'rb-fchange', :require => false
 	gem 'rails3-generators'
 	gem 'launchy'
+	gem 'unicorn'
 end
 

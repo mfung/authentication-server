@@ -8,12 +8,14 @@
     %td Application Name
     %td ID (app_id)
     %td Secret (app_secret)
+    %td Delete
   - if @apps
     - @apps.sort_by(&:name).each do |app|
       %tr
         %td= link_to "#{app.name}", edit_admin_app_path(:id => app.id)
         %td= "#{app.app_id}"
-        %td= "#{app.app_secret}"      
+        %td= "#{app.app_secret}"
+        %td= link_to 'Delete', admin_app_path(:id => app.id), :confirm => 'Are you sure?', :method => :delete     
   - else
     %tr
       %td{:colspan=>3}= No Records Found

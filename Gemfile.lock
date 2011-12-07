@@ -102,6 +102,7 @@ GEM
       railties (~> 3.0)
       thor (~> 0.14)
     json (1.6.2)
+    kgio (2.6.0)
     launchy (2.0.5)
       addressable (~> 2.2.6)
     mail (2.3.0)
@@ -142,6 +143,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (~> 0.14.6)
+    raindrops (0.8.0)
     rake (0.9.2.2)
     rb-fchange (0.0.5)
       ffi
@@ -195,6 +197,10 @@ GEM
     uglifier (1.1.0)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    unicorn (4.1.1)
+      kgio (~> 2.4)
+      rack
+      raindrops (~> 0.6)
     warden (1.1.0)
       rack (>= 1.0)
     xpath (0.1.4)
@@ -225,3 +231,4 @@ DEPENDENCIES
   simple_roles!
   sqlite3
   uglifier (>= 1.0.3)
+  unicorn

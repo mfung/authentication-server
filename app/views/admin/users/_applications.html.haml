@@ -4,7 +4,7 @@
     %h2= "Active"
     = form_for :clients, :url => admin_users_remove_apps_path, :method => :post do |f|
       = hidden_field_tag :user_id, @user.id
-      %table{:style => 'width:50%'}
+      %table{:style => 'width:100%'}
         %tr
           %td= "Application"
           %td= "Roles"
@@ -25,7 +25,10 @@
         %tr
           %td{:colspan => 2}
           %td{:colspan => 2, :style => 'text-align:right'} 
-            = f.submit 'Delete All', :confirm => "Are you sure?"
+            - if @user.clients.count > 0
+              = f.submit 'Delete All', :confirm => "Are you sure?"
+            - else
+              = f.submit 'Delete All', :disabled => true
   %div.list_all
     %h2= "All"
     = form_for :clients, :url => admin_users_add_apps_path, :method => :post do |f|

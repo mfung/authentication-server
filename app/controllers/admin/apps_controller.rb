@@ -35,6 +35,14 @@ class Admin::AppsController < ApplicationController
     end
   end
   
+  def destroy
+    @app = Client.find(params[:id])
+    AccessRight.delete_all(['client_id = ?', @app.id])
+    AccessGrant.delete_all(['client_id = ?', @app.id])
+    @app.destroy
+    redirect_to admin_apps_url, :notice => "Successfully removed Application."
+  end
+  
   def sync_roles
     @app = Client.find_by_id(params[:client][:id])
     if !@app.uri.empty? and !@app.remote_roles_path.empty?
