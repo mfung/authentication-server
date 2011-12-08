@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       #session[:user_id] = @user.id
-      redirect_to admin_users_path, :notice => "You successfully created an account."
+      redirect_to admin_users_path, :notice => "You have successfully added a User."
     else
       render :action => 'new'
     end
@@ -37,6 +37,16 @@ class Admin::UsersController < ApplicationController
     end
   end
   
+  def destroy
+    if current_user.is_superuser?
+      @user = User.find(params[:id])
+      @user.destroy
+      AccessRight.delete_all(['user_id = ?', @user.id])
+      AccessGrant.delete_all(['user_id = ?', @user.id])
+      redirect_to admin_users_path, :notice => "Successfully removed a User."
+    end
+  end
+  
   def add_apps
     @user = User.find_by_id(params['clients']['user'])
     
@@ -47,7 +57,7 @@ class Admin::UsersController < ApplicationController
       end
     
       if @user.save
-        redirect_to edit_admin_user_path(:id => @user.id)
+        redirect_to edit_admin_user_path(:id => @user.id), :notice => 'You have successfully added Application(s)'
       end
     else
       redirect_to edit_admin_user_path(:id => @user.id), :notice => 'Please select an Application.'
@@ -73,6 +83,13 @@ class Admin::UsersController < ApplicationController
     ar.roles = params[:clients][:roles]
     ar.save
     redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully changed User Role.'
+  end
+  
+  def change_status
+    @user = User.find_by_id(params[:user_id])
+    @user.status = params[:user][:status]
+    @user.save
+    redirect_to admin_users_path, :notice => 'Successfully changed User Status.'
   end
   
   private

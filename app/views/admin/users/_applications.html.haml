@@ -11,11 +11,11 @@
           %td= "Delete"
           %td== &nbsp;
         - @user.clients.sort_by(&:name).each do |client|
-          %tr
+          %tr{:class => "user-app-item"}
             %td= "#{client.name}"
             //%td= "#{client.access_rights.find_by_user_id(@user.id).roles}"
             %td
-              = form_for :user, :url => admin_users_change_role_path, :remote => true, :html => {:name => "user_apps_#{client.id}"} do |f2|
+              = form_for :user, :url => admin_users_change_role_path, :remote => true, :html => {:name => "user_apps_#{client.id}"}, :method => :post do |f2|
                 = hidden_field_tag :user_id, @user.id
                 = hidden_field_tag :client_id, client.id
                 - if client.roles

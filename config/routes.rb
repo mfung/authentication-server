@@ -12,7 +12,7 @@ Authentication::Application.routes.draw do
       
   root :to => 'home#index'
   
-  namespace :admin do
+  namespace :admin do    
     resources :users
     resources :apps
     
@@ -21,6 +21,7 @@ Authentication::Application.routes.draw do
     match '/users/remove_apps' => 'users#remove_apps', :via => :post
     match '/apps/sync_roles' => 'apps#sync_roles'
     match '/users/change_role' => 'users#change_role', :via => :post
+    match '/users/change_status' => 'users#change_status', :via => :post
   end
   
   resources :apps
