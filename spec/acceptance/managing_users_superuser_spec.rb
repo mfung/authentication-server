@@ -73,12 +73,10 @@ feature 'Managing Users As a Superuser', %q{
   scenario 'should be able to deactivate a user' do
     users = FactoryGirl.create_list(:user, 10)
     visit admin_users_path
-    
     within "#user_#{users.last.id}_status" do
       select 'Inactive', :from => "user_#{users.last.id}_status_select"
       click_button 'Update Status'
     end
-    
     page.should have_content 'Successfully changed User Status'
     page.find_field("user_#{users.last.id}_status_select").value == 'Inactive'
   end
@@ -87,14 +85,12 @@ feature 'Managing Users As a Superuser', %q{
     user = FactoryGirl.create(:user)
     app = FactoryGirl.create(:client)
     visit edit_admin_user_path(:id => user.id)
-    
     within ".list_all" do
       select app.name, :from => "clients_id"
     end
     click_button 'Add Application(s)'
     page.should have_content "successfully added Application(s)"
     page.should have_css '.user-app-item', :count => 1
-    
   end
   
   scenario 'should be able to assign a role to a user on an application' do
@@ -103,7 +99,6 @@ feature 'Managing Users As a Superuser', %q{
     user.clients << apps[0]
     user.save
     visit edit_admin_user_path(:id => user.id)
-    
     within ".list_active" do
       select 'Superadmin', :from => "user_apps_select_#{apps[0].id}"
       click_button 'Update Role'
@@ -112,4 +107,18 @@ feature 'Managing Users As a Superuser', %q{
     page.find_field("user_apps_select_#{apps[0].id}").value == "Superadmin"
   end
   
+  scenario 'should be able to remove/revoke an application from a user' do
+    user = FactoryGirl.create(:user)
+    apps = FactoryGirl.create_list(:client, 3)
+    user.clients << apps[0]
+    user.clients << apps[1]
+    user.clients << apps[2]
+    user.save
+    visit edit_admin_user_path(:id => user.id)
+    page.should have_css '.user-app-item', :count => 3
+    within ".list_active" do
+      click_link 'Delete'
+    end
+    page.should have_css '.user-app-item', :count => 2
+  end
 end
