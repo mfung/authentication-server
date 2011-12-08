@@ -98,7 +98,18 @@ feature 'Managing Users As a Superuser', %q{
   end
   
   scenario 'should be able to assign a role to a user on an application' do
+    user = FactoryGirl.create(:user)
+    apps = FactoryGirl.create_list(:client, 5)
+    user.clients << apps[0]
+    user.save
+    visit edit_admin_user_path(:id => user.id)
     
+    within ".list_active" do
+      select 'Superadmin', :from => "user_apps_select_#{apps[0].id}"
+      click_button 'Update Role'
+    end
+    page.should have_content 'Successfully changed User Role'
+    page.find_field("user_apps_select_#{apps[0].id}").value == "Superadmin"
   end
   
 end

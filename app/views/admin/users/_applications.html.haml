@@ -19,7 +19,8 @@
                 = hidden_field_tag :user_id, @user.id
                 = hidden_field_tag :client_id, client.id
                 - if client.roles
-                  = f.select :roles, client.roles.split(',').collect {|p| [ p.humanize, p ] }, {:selected => client.access_rights.find_by_user_id(@user.id).roles, :include_blank => true}, {:onchange => "document.forms['user_apps_#{client.id}'].submit()", :class => 'chzn-select'}
+                  = f.select :roles, client.roles.split(',').collect {|p| [ p.humanize, p ] }, {:selected => client.access_rights.find_by_user_id(@user.id).roles, :include_blank => true}, {:onchange => "document.forms['user_apps_#{client.id}'].submit()", :class => 'chzn-select', :id => "user_apps_select_#{client.id}"}
+                  = f.submit 'Update Role', :class => 'update-role-button'
             %td= link_to 'Delete', admin_users_remove_app_path(:id => client.id, :user_id => @user.id), :confirm => "Are you sure?"
             %td= check_box_tag('client_ids[]', client.id, false, {:id => "client_"})
         %tr

@@ -27,5 +27,6 @@ FactoryGirl.define do
     app_secret
     uri
     remote_roles_path
+    roles 'superadmin,admin,user'
   end
 end

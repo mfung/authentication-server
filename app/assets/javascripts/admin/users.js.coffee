@@ -4,4 +4,5 @@
 
 $ ->
 	$('.status-button').hide()
+	$('.update-role-button').hide()
 		
