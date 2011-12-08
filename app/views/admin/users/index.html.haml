@@ -4,9 +4,9 @@
   %div
     = link_to 'Add User', new_admin_user_path
   
-%table
-  - @users.each do |user|
-    %tr
+%table.users-list
+  - @users.each_with_index do |user, index|
+    %tr{:class => "user_#{index + 1}"}
       %td= "#{user.first_name}"
       %td= "#{user.last_name}"
       %td= "#{user.id}"
@@ -18,7 +18,7 @@
     %tr
       %td{:colspan => 7}
         %div.list_apps_main
-          %table
+          %table.user-apps
             %tr
               %td= "Applications"
               %td= "Roles"

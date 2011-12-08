@@ -3,14 +3,14 @@
 %div
   = link_to "Add Application", new_admin_app_path
 
-%table
+%table.applications-list
   %tr
     %td Application Name
     %td ID (app_id)
     %td Secret (app_secret)
     %td Delete
   - if @apps
-    - @apps.sort_by(&:name).each do |app|
+    - @apps.sort_by(&:name).each_with_index do |app, index|
       %tr
         %td= link_to "#{app.name}", edit_admin_app_path(:id => app.id)
         %td= "#{app.app_id}"

@@ -47,3 +47,10 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 end
+
+def acceptance_signin_user
+  visit new_user_session_path
+  fill_in 'Email', :with => 'test@gmail.com'
+  fill_in 'Password', :with => 'password'
+  click_button 'Sign in'
+end

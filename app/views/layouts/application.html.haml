@@ -20,10 +20,10 @@
         - if current_user
           - if current_user.has_role?(:superuser)
             %li
-              = link_to "Mange Applications", admin_apps_path
+              = link_to "Manage Applications", admin_apps_path
           - if current_user.has_role?(:superuser) || current_user.has_role?(:admin)
             %li
-              = link_to "Mange Users", admin_users_path
+              = link_to "Manage Users", admin_users_path
           %li
             = link_to "Edit My Account", edit_my_account_path(:id => current_user.id)
           %li

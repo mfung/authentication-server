@@ -8,4 +8,10 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, :notice => "You do not have access."
     end
   end
+  
+  def check_for_superuser
+    unless current_user.roles.include?(:superuser)
+      redirect_to root_path, :notice => "You do not have access."
+    end
+  end
 end

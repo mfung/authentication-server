@@ -1,7 +1,7 @@
 require 'open-uri'
 
 class Admin::AppsController < ApplicationController
-  before_filter :authenticate_user!, :check_for_admin
+  before_filter :authenticate_user!, :check_for_admin, :check_for_superuser
   
   def index
     @apps = Client.all

@@ -1,0 +1,36 @@
+require File.dirname(__FILE__) + '/../spec_helper'
+
+feature "Authentication [admin]", %q{
+  In order to manage users and applications on my system
+  As a admin
+  I want to be able to login as an admin
+} do
+  
+  background do
+    @admin = Factory.create(:user_with_role_admin)
+  end
+  
+  scenario "New User Session [Sign In Screen]" do
+    visit new_user_session_url
+    page.should have_content 'Sign In'
+  end
+
+  scenario "Signing In" do
+    visit new_user_session_path
+    fill_in 'Email', :with => @admin.email
+    fill_in 'Password', :with => @admin.password
+    click_button 'Sign in'
+    page.should have_content 'Signed in successfully.'
+    page.should have_content @admin.email
+    page.should have_content "Admin"
+    page.should have_content "Welcome"
+  end
+end
+
+feature "User management [admin]", %q{
+  In order to manage user accounts
+  As an admin
+  I want to be able to view, add and delete accounts
+} do
+  
+end
