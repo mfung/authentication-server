@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 feature "Management Suite [user]", %q{
-  In order to manage my account
   As a user
-  I want to be able to only Edit My Account
+  I should only have access to edit my account
+  So that I do not cause a security risk and try to do things I shouldn't
 } do
   
   background do
@@ -11,7 +11,6 @@ feature "Management Suite [user]", %q{
     @role = Factory.create(:role_user)
     @user.roles << :user
     @user.save
-    
     visit new_user_session_path
     fill_in 'Email', :with => @user.email
     fill_in 'Password', :with => @user.password

@@ -11,7 +11,6 @@ feature "Management Suite [admin]", %q{
     @role = Factory.create(:role_admin)
     @adminuser.roles << :admin
     @adminuser.save
-    
     visit new_user_session_path
     fill_in 'Email', :with => @adminuser.email
     fill_in 'Password', :with => @adminuser.password

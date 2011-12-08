@@ -11,7 +11,7 @@
     %td Delete
   - if @apps
     - @apps.sort_by(&:name).each_with_index do |app, index|
-      %tr
+      %tr.app-item
         %td= link_to "#{app.name}", edit_admin_app_path(:id => app.id)
         %td= "#{app.app_id}"
         %td= "#{app.app_secret}"

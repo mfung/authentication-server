@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 feature "Management Suite [superuser]", %q{
-  In order to manage users and applications
   As a superuser
   I want to be able to Manage Applications and Manage Users
+  So that I can add more applications, users and keep them current
 } do
   
   background do

@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 feature "Authentication [superuser]", %q{
-  In order to manage users and admins
   As a superuser
   I want to be able to login and manage all users and applications in the system
+  So that I can allow applications and users access to various resources
 } do
   
   background do
