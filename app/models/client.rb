@@ -22,6 +22,6 @@ class Client < ActiveRecord::Base
   
   private
   def filter_remote_roles_path
-    self.remote_roles_path = ("/" + self.remote_roles_path) if self.remote_roles_path[0] != '/' 
+    self.remote_roles_path = ("/" + self.remote_roles_path) if self.remote_roles_path[0] != '/' if self.remote_roles_path
   end
 end
