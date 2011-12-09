@@ -42,12 +42,12 @@ describe Client do
     client.remote_roles_path.should eq("/api/roles")
   end
   
-  it "should return a string in the form of id: name for collections when name_with_id" do
+  it "should return a string in the form of 'id: name' for collections when name_with_id is called" do
     client = Client.create(@client_attr)
     client.name_with_id.should eq("#{client.id}: #{client.name}")
   end
   
-  it "should return the correct client model when I give it an app_id and app_secret" do
+  it "should return the correct client model when given an app_id and app_secret" do
     client = Client.create(@client_attr)
     client.app_id = 'app_id'
     client.app_secret = 'app_secret'
