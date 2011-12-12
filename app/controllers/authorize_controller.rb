@@ -4,8 +4,8 @@ class AuthorizeController < ApplicationController
   
   def authorize
     AccessGrant.prune!
-    client = Client.find_by_app_id(params[:client_id])
-    if current_user.access_rights.find_by_client_id(client.id) and current_user.status == 'Active'
+    client = Client.find_by_app_id_and_status(params[:client_id], 'Active')
+    if current_user.access_rights.find_by_client_id(client.id)
       access_grant = current_user.access_grants.create(:client => application)
       redirect_to access_grant.redirect_uri_for(params[:redirect_uri])
     else
