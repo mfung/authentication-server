@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 feature "Authentication [admin]", %q{
-  As a admin
+  As an admin
   I want to be able to login and manage users only
   So that I don't cause a security risk I only have access to users
 } do

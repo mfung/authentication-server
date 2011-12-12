@@ -11,7 +11,7 @@
   %p
     = f.label :department
     %br
-    = f.text_field :department
+    = f.select :department, DEPARTMENTS, {:selected => @user.department, :include_blank => true}, {:class => 'chzn-select',:style => 'width:180px;'}
   %p
     = f.label :email, "Email Address"
     %br

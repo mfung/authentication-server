@@ -1,3 +1,5 @@
+DEPARTMENTS = %w{Executive Sales Development Production 'Customer Service' Accounting HR Marketing}
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
