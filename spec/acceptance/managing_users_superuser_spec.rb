@@ -27,7 +27,7 @@ feature 'Managing Users As a Superuser', %q{
     click_link 'Add User'
     fill_in 'First name', :with => user.first_name
     fill_in 'Last name', :with => user.last_name
-    fill_in 'Department', :with => user.department
+    select  'Sales', :from => 'department'
     fill_in 'Email Address', :with => user.email
     fill_in 'Password', :with => user.password
     fill_in 'Confirm Password', :with => user.password
@@ -41,7 +41,7 @@ feature 'Managing Users As a Superuser', %q{
     visit new_admin_user_path
     fill_in 'First name', :with => user.first_name
     fill_in 'Last name', :with => user.last_name
-    fill_in 'Department', :with => user.department
+    select  'Sales', :from => 'department'
     fill_in 'Email Address', :with => ''
     fill_in 'Password', :with => user.password
     fill_in 'Confirm Password', :with => user.password
@@ -54,7 +54,7 @@ feature 'Managing Users As a Superuser', %q{
     visit new_admin_user_path
     fill_in 'First name', :with => 'New Firt Name'
     fill_in 'Last name', :with => 'New Last Name'
-    fill_in 'Department', :with => 'New Department'
+    select  'Sales', :from => 'department'
     fill_in 'Email Address', :with => user.email
     fill_in 'Password', :with => user.password
     fill_in 'Confirm Password', :with => user.password

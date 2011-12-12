@@ -34,9 +34,12 @@ feature "Management Suite [admin]", %q{
   end
   
   scenario "View List of Users" do
-    @created_apps = FactoryGirl.create_list(:user, 10)
+    @created_users = FactoryGirl.create_list(:user, 10)
+    FactoryGirl.create(:role_user)
+    @created_users[0].roles << :user
+    @created_users[0].save
     visit admin_users_path
-    page.should have_css '.user_10', :count => 1
+    page.should have_css '.user_1', :count => 1
     #save_and_open_page
   end
 end
