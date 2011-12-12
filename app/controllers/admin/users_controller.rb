@@ -2,7 +2,13 @@ class Admin::UsersController < ApplicationController
   before_filter :authenticate_user!, :check_for_admin
 
   def index
-    @users = User.all
+    if current_user.is_superuser?
+      @users = User.all
+    elsif current_user.is_admin?
+      @users = User.with_role_user
+    else
+      @users = [current_user]
+    end
   end
   
   def new
@@ -89,6 +95,7 @@ class Admin::UsersController < ApplicationController
     @user = User.find_by_id(params[:user_id])
     @user.status = params[:user][:status]
     @user.save
+    AccessGrant.delete_all(["user_id = ?", @user.id]) if @user.status == 'Inactive'
     redirect_to admin_users_path, :notice => 'Successfully changed User Status.'
   end
   

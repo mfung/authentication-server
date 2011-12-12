@@ -41,5 +41,9 @@ class User < ActiveRecord::Base
     "Email:" + self.email.to_s + "|Name:" + self.first_name.to_s + self.last_name + "|Status:" + self.status.to_s + "|Department:" + self.department.to_s
   end
   
+  def self.with_role_user
+    Role.find_by_name('user').users
+  end
+  
 end
 
