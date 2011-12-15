@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111206182313) do
+ActiveRecord::Schema.define(:version => 20111215162049) do
 
   create_table "access_grants", :force => true do |t|
     t.string   "code"
@@ -34,6 +34,12 @@ ActiveRecord::Schema.define(:version => 20111206182313) do
 
   add_index "access_rights", ["client_id"], :name => "index_access_rights_on_client_id"
   add_index "access_rights", ["user_id"], :name => "index_access_rights_on_user_id"
+
+  create_table "admin_departments", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "clients", :force => true do |t|
     t.string   "name"

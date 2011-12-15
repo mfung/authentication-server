@@ -1,5 +1,7 @@
 Authentication::Application.routes.draw do
 
+  namespace :admin do resources :departments end
+
   devise_for :users, :controllers => {  :registrations => 'registrations',
                                         :sessions => 'sessions'}
                                         

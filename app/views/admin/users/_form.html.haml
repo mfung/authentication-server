@@ -11,7 +11,7 @@
   %p
     = f.label :department
     %br
-    = f.select :department, DEPARTMENTS, {:selected => @user.department, :include_blank => true}, {:class => 'chzn-select',:style => 'width:180px;', :id => 'department'}
+    = f.select :department, @departments.collect {|p| [p.name.humanize]}, {:selected => @user.department, :include_blank => true}, {:class => 'chzn-select',:style => 'width:220px;', :id => 'department'}
   %p
     = f.label :email, "Email Address"
     %br

@@ -13,6 +13,7 @@ class Admin::UsersController < ApplicationController
   
   def new
     @user = User.new
+    @departments = Department.find(:all, :order => 'name ASC')
   end
   
   def create
@@ -28,6 +29,7 @@ class Admin::UsersController < ApplicationController
   def edit
     @user = User.find_by_id(params[:id])
     @apps = Client.all - @user.clients
+    @departments = Department.find(:all, :order => 'name ASC')
   end
   
   def update

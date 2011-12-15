@@ -21,6 +21,8 @@
           - if current_user.has_role?(:superuser)
             %li
               = link_to "Manage Applications", admin_apps_path
+            %li
+              = link_to "Manage Departments", admin_departments_path
           - if current_user.has_role?(:superuser) || current_user.has_role?(:admin)
             %li
               = link_to "Manage Users", admin_users_path
