@@ -7,6 +7,7 @@ Authentication::Application.routes.draw do
   match '/authorize/exteres/authorize' => 'authorize#authorize'
   match '/authorize/exteres/access_token' => 'authorize#access_token'
   match '/authorize/exteres/user' => 'authorize#user'
+  match '/oauth/token' => 'authorize#access_token'
   
   match 'login' => redirect('/users/sign_in'), :as => :login
       

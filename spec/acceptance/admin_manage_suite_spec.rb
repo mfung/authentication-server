@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 feature "Management Suite [admin]", %q{
-  In order to manage users and applications
-  As a superuser
-  I want to be able to only Manage Users
+  As a admin
+  In order to manage users
+  So that I can allow users access to applications to do their jobs
 } do
   
   background do

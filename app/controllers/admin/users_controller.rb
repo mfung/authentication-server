@@ -49,7 +49,10 @@ class Admin::UsersController < ApplicationController
       @user.destroy
       AccessRight.delete_all(['user_id = ?', @user.id])
       AccessGrant.delete_all(['user_id = ?', @user.id])
-      redirect_to admin_users_path, :notice => "Successfully removed a User."
+      respond_to do |format|
+        format.html {redirect_to admin_users_path, :notice => "Successfully removed a User."}
+        format.js {head :ok}
+      end
     end
   end
   
@@ -58,21 +61,39 @@ class Admin::UsersController < ApplicationController
     
     if params['clients']['id']
       params['clients']['id'].each do |client_id|
-        client = Client.find(client_id)
-        @user.clients << client unless @user.clients.find_by_id(client.id)
+        @client = Client.find(client_id)
+        @user.clients << @client unless @user.clients.find_by_id(@client.id)
       end
     
       if @user.save
-        redirect_to edit_admin_user_path(:id => @user.id), :notice => 'You have successfully added Application(s)'
+        status = :ok
+        notice = 'You have successfully added Application(s)'
       end
     else
-      redirect_to edit_admin_user_path(:id => @user.id), :notice => 'Please select an Application.'
+      status = :error
+      notice = 'Please select an Application.'
+    end
+    @apps = Client.all - @user.clients
+    respond_to do |format|
+      format.html {redirect_to edit_admin_user_path(:id => @user.id), :notice => notice}
+      format.js do 
+        str = render_to_string :partial => 'applications', :locals => {:user => @user, :clients => @user.clients}
+        render :json => str.to_json
+      end
     end
   end
   
-  def remove_app    
+  def remove_app
     remove_apps_access_grants_and_rights(params[:user_id], params[:id])
-    redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully removed Application(s).'
+    @user = User.find_by_id(params[:user_id])  
+    @apps = Client.all - @user.clients
+    respond_to do |format|
+      format.html {redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully removed Application(s).'}
+      format.js do
+        str = render_to_string :partial => 'applications', :locals => {:user => @user, :clients => @user.clients}
+        render :json => str.to_json
+      end
+    end
   end
   
   def remove_apps    
@@ -86,9 +107,12 @@ class Admin::UsersController < ApplicationController
   def change_role
     @user = User.find_by_id(params[:user_id])
     ar = @user.access_rights.find_by_client_id(params[:client_id])
-    ar.roles = params[:clients][:roles]
+    ar.roles = params[:user][:roles]
     ar.save
-    redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully changed User Role.'
+    respond_to do |format|
+      format.html {redirect_to edit_admin_user_path(:id => params[:user_id]), :notice => 'Successfully changed User Role.'}
+      format.js {head :ok}
+    end
   end
   
   def change_status
@@ -96,7 +120,10 @@ class Admin::UsersController < ApplicationController
     @user.status = params[:user][:status]
     @user.save
     AccessGrant.delete_all(["user_id = ?", @user.id]) if @user.status == 'Inactive'
-    redirect_to admin_users_path, :notice => 'Successfully changed User Status.'
+    respond_to do |format|
+      format.html {redirect_to admin_users_path, :notice => 'Successfully changed User Status.'}
+      format.js {head :ok}
+    end
   end
   
   private

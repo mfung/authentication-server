@@ -12,6 +12,7 @@ FactoryGirl.define do
     department { %w{Sales Production CS HR}.sample }
     password 'password'
     password_confirmation 'password'
+    roles :factory => :role_superuser
   end
   
   factory :role do

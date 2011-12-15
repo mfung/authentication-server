@@ -47,6 +47,7 @@ class AuthorizeController < ApplicationController
       :uid        => current_user.id.to_s,
       :user_info  => { :name => current_user.email },
       :extra      => {
+        :email => current_user.email,
         :status => current_user.status,
         :first_name => current_user.first_name,
         :last_name => current_user.last_name,

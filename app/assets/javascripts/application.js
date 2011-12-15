@@ -9,6 +9,6 @@
 //= require_tree .
 //= require chosen.jquery.min.js
 
-jQuery(function($){
-    $('.chzn-select').chosen();
+$(function(){
+  $('.chzn-select').chosen();
 });

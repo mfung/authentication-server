@@ -15,12 +15,12 @@
         = link_to user.email, edit_admin_user_path(:id => user.id)
       %td= user.roles
       %td
-        = form_for user, :url => admin_users_change_status_path, :html => {:id => "user_#{user.id}_status"}, :method => :post do |f|
+        = form_for user, :url => admin_users_change_status_path, :html => {:id => "user_#{user.id}_status"}, :method => :post, :remote => true do |f|
           = hidden_field_tag :user_id, user.id
-          = select :user, :status, ['Active','Inactive'], {:selected => user.status} , {:class => 'chzn-select', :id => "user_#{user.id}_status_select", :style => 'width:80px;', :onchange => "document.forms['user_#{user.id}_status'].submit()",}
+          = select :user, :status, ['Active','Inactive'], {:selected => user.status} , {:class => 'chzn-select user-change-status', :id => "user_#{user.id}_status_select", :style => 'width:80px;'}
           %br
           = f.submit 'Update Status', :class => 'status-button'
-      %td= link_to 'Delete', admin_user_path(:id => user.id), :method => :delete,:class => "delete_#{user.id}", :confirm => 'Are you sure?'
+      %td= link_to 'Delete', admin_user_path(:id => user.id), :method => :delete, :class => "delete_#{user.id} remove-user", :confirm => 'Are you sure?', :remote => true
     %tr
       %td{:colspan => 7}
         %div.list_apps_main
