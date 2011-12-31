@@ -39,7 +39,9 @@ class AuthorizeController < ApplicationController
   
   def user
     client = AccessGrant.find_by_access_token(params['access_token']).client
-    role = AccessRight.find_by_user_id_and_client_id(current_user.id, client.id).roles
+    ar = AccessRight.find_by_user_id_and_client_id(current_user.id, client.id)
+    role = ar.roles
+    default_user = ar.default_user
     data_hash = Digest::MD5.hexdigest(current_user.serialize_data.to_s + "|Role:" + role.to_s + "|Client:" + client.id.to_s)
     
     hash = {
@@ -53,6 +55,7 @@ class AuthorizeController < ApplicationController
         :last_name => current_user.last_name,
         :department => current_user.department,
         :role => role,
+        :default_user => default_user,
         :data_hash => data_hash
       }
     }

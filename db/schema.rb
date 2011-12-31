@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111215162049) do
+ActiveRecord::Schema.define(:version => 20111231000719) do
 
   create_table "access_grants", :force => true do |t|
     t.string   "code"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20111215162049) do
     t.string   "roles"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "default_user"
   end
 
   add_index "access_rights", ["client_id"], :name => "index_access_rights_on_client_id"

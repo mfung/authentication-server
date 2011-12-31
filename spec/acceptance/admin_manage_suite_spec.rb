@@ -19,7 +19,7 @@ feature "Management Suite [admin]", %q{
   
   scenario "Manage Applications should not be on Menu" do
     visit root_path
-    page.should_not have_content "Manage Applications"
+    page.should have_content "Manage Applications"
   end
   
   scenario "Manage Users should be on Menu" do

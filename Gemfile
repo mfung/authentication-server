@@ -35,6 +35,7 @@ gem 'jquery-rails'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :development, :test do
+  gem 'awesome_print'
 	gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
