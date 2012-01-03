@@ -1,5 +1,15 @@
 Authentication::Application.routes.draw do
 
+  get "user_apps/create"
+
+  get "user_apps/destory"
+
+  get "user_apps/role"
+
+  get "user_apps/status"
+
+  get "user_apps/destory_access_grants_and_rights"
+
   namespace :admin do resources :departments end
 
   devise_for :users, :controllers => {  :registrations => 'registrations',
