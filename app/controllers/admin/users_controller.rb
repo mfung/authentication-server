@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
   
   def new
     @user = User.new
-    @departments = Department.find(:all, :order => 'name ASC')
+    data_fields
   end
   
   def create
@@ -22,6 +22,7 @@ class Admin::UsersController < ApplicationController
       #session[:user_id] = @user.id
       redirect_to admin_users_path, :notice => "You have successfully added a User."
     else
+      data_fields
       render :action => 'new'
     end
   end
@@ -29,7 +30,7 @@ class Admin::UsersController < ApplicationController
   def edit
     @user = User.find_by_id(params[:id])
     @apps = Client.all - @user.clients
-    @departments = Department.find(:all, :order => 'name ASC')
+    data_fields
   end
   
   def update
@@ -41,6 +42,7 @@ class Admin::UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       redirect_to admin_users_path, :notice => "Your profile has been updated."
     else
+      data_fields
       render :action => 'edit'
     end
   end
@@ -129,6 +131,10 @@ class Admin::UsersController < ApplicationController
   end
   
   private
+  
+  def data_fields
+    @departments = Admin::Department.find(:all, :order => 'name ASC')
+  end
   
   def remove_apps_access_grants_and_rights(user_id, client_id)
     AccessGrant.delete_all(["user_id = ? AND client_id = ?", user_id, client_id])

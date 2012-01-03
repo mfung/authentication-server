@@ -1,15 +1,5 @@
 Authentication::Application.routes.draw do
 
-  get "user_apps/create"
-
-  get "user_apps/destory"
-
-  get "user_apps/role"
-
-  get "user_apps/status"
-
-  get "user_apps/destory_access_grants_and_rights"
-
   namespace :admin do resources :departments end
 
   devise_for :users, :controllers => {  :registrations => 'registrations',
@@ -26,9 +16,12 @@ Authentication::Application.routes.draw do
   root :to => 'home#index'
   
   namespace :admin do    
-    resources :users
-    resources :apps
+    resources :users do 
+      resources :user_apps, :as => "applications"
+    end
     
+    resources :apps
+
     match '/users/add_apps' => 'users#add_apps', :via => :post
     match '/users/remove_app/:id/with_user/:user_id' => 'users#remove_app', :via => :get, :as => 'users_remove_app'
     match '/users/remove_apps' => 'users#remove_apps', :via => :post

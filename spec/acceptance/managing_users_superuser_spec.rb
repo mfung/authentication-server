@@ -13,7 +13,8 @@ feature 'Managing Users As a Superuser', %q{
     visit new_user_session_path
     fill_in 'Email', :with => @superuser.email
     fill_in 'Password', :with => @superuser.password
-    click_button 'Sign in'    
+    click_button 'Sign in'
+    @departments = FactoryGirl.create(:department)
   end
   
   scenario 'should be able to see a listing of all users' do
@@ -45,8 +46,10 @@ feature 'Managing Users As a Superuser', %q{
     fill_in 'Email Address', :with => ''
     fill_in 'Password', :with => user.password
     fill_in 'Confirm Password', :with => user.password
-    click_button 'Add User'
-    page.should have_content "Email can't be blank"    
+    click_button 'Add User'  
+
+    page.should have_content "Email can't be blank"
+
   end
   
   scenario 'should not be able to add a user with an existing email' do
