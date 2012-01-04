@@ -33,7 +33,13 @@ $ ->
     
     if app[3]
       selector_str = "." + app[0] + "." + app[2] + ".user-item"
-      msg_str = $(selector_str + " > td:nth-child(2)").text() + ", " + $(selector_str + " > td:first").text() + " [" + $.trim($(selector_str + " > td:nth-child(5)").text()) + "]" + " will no longer be assigned as the default user."
+      
+      def_name = $(selector_str + " > td:nth-child(2)").text() + ", " + $(selector_str + " > td:first").text()
+      def_email = $.trim($(selector_str + " > td:nth-child(5)").text())
+      def_department = $.trim($(selector_str + " > td:nth-child(4)").text())
+      def_app = $.trim($(this).closest('tr').children('td:nth-child(1)').text())
+      msg_str = def_name + " [" + def_email + "]\nDepartment: " + def_department + "\nApplication: " + def_app + "\n\nWill no longer be assigned the default user."
+      
       if (confirm(msg_str))
         $(this).parent('form').submit()
       else
@@ -46,7 +52,9 @@ $ ->
         selector_str = "." + def_app_user[0] + ".user-item"
         def_name = $(selector_str + " > td:nth-child(2)").text() + ", " + $(selector_str + " > td:first").text()
         def_email = $.trim($(selector_str + " > td:nth-child(5)").text())
-        msg_str = def_name + " [" + def_email + "]\nWill no longer be assigned to be the default user."
+        def_department = $.trim($(selector_str + " > td:nth-child(4)").text())
+        def_app = $.trim($(this).closest('tr').children('td:nth-child(1)').text())
+        msg_str = def_name + " [" + def_email + "]\nDepartment: " + def_department + "\nApplication: " + def_app + "\n\nWill no longer be assigned the default user."
       
         if (confirm(msg_str))
           $(this).parent('form').submit()
