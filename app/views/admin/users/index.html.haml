@@ -6,7 +6,7 @@
   
 %table.users-list
   - @users.each_with_index do |user, index|
-    %tr{:class => "user_#{index + 1} user-item"}
+    %tr{:class => "user_#{user.id} user-item"}
       %td= "#{user.first_name}"
       %td= "#{user.last_name}"
       %td= "#{user.id}"
@@ -28,9 +28,23 @@
             %tr
               %td= "Applications"
               %td= "Roles"
+              %td= "Default User"
+              %td= ""
             - user.clients.sort_by(&:name).each do |client|
-              %tr
+              - app_ar = client.access_rights.find_by_user_id(user.id)
+              - tr_class = "user_#{user.id} client_#{client.id}"
+              - if app_ar.default_user == true
+                - tr_class = (tr_class + ' default_user')
+              %tr{:class => tr_class}
                 %td
                   = client.name.to_s
                 %td
-                  = client.access_rights.find_by_user_id(user.id).roles.to_s
+                  = app_ar.roles.to_s
+                %td
+                  = app_ar.default_user.to_s
+                %td
+                  = form_for 'default_user', :url => admin_user_application_default_user_path(user,client, :format => :json), :html => {:id => "user_#{user.id}_app_#{client.id}_default", :class => 'change_default_form'}, :method => :post, :remote => true do |f|
+                    = select 'user', 'default', ['True','False'], {:selected => app_ar.default_user.to_s.humanize} , {:class => 'chzn-select user-change-default', :id => "user_#{user.id}_app_#{client.id}_default_select", :style => 'width:80px;'}
+                    %br
+                    = f.submit "Change Default Status", :class => 'status-button'
+                  

@@ -17,7 +17,10 @@ Authentication::Application.routes.draw do
   
   namespace :admin do    
     resources :users do 
-      resources :user_apps, :as => "applications"
+      resources :user_apps, :as => 'applications' do 
+        post :role
+        post :default_user
+      end
     end
     
     resources :apps
