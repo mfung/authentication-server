@@ -42,7 +42,7 @@ class AuthorizeController < ApplicationController
     ar = AccessRight.find_by_user_id_and_client_id(current_user.id, client.id)
     role = ar.roles
     default_user = ar.default_user
-    data_hash = Digest::MD5.hexdigest(current_user.serialize_data.to_s + "|Role:" + role.to_s + "|Client:" + client.id.to_s)
+    data_hash = Digest::MD5.hexdigest(current_user.serialize_data.to_s + "|Role:" + role.to_s + "|Client:" + client.id.to_s + "|Default:" + default_user.to_s)
     
     hash = {
       :provider   => 'exteres',

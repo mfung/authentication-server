@@ -38,8 +38,12 @@ class Admin::UsersController < ApplicationController
     
     params[:user].delete(:password) if params[:user][:password].blank?
     params[:user].delete(:password_confirmation) if params[:user][:password_confirmation].blank?
+    old_dept = @user.department
     
     if @user.update_attributes(params[:user])
+      if old_dept != params[:user][:department]
+        AccessRight.update_all("default_user='f'","user_id = #{@user.id}")
+      end
       redirect_to admin_users_path, :notice => "Your profile has been updated."
     else
       data_fields

@@ -6,7 +6,7 @@
   
 %table.users-list
   - @users.each_with_index do |user, index|
-    %tr{:class => "user_#{user.id} user-item"}
+    %tr{:class => "user_#{user.id} dept_#{user.department.to_s.gsub(' ','_').downcase} user-item"}
       %td= "#{user.first_name}"
       %td= "#{user.last_name}"
       %td= "#{user.id}"
@@ -32,7 +32,7 @@
               %td= ""
             - user.clients.sort_by(&:name).each do |client|
               - app_ar = client.access_rights.find_by_user_id(user.id)
-              - tr_class = "user_#{user.id} client_#{client.id}"
+              - tr_class = "user_#{user.id} client_#{client.id} dept_#{user.department.to_s.gsub(' ','_').downcase}"
               - if app_ar.default_user == true
                 - tr_class = (tr_class + ' default_user')
               %tr{:class => tr_class}

@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+  
 	$('.status-button').hide()
 	$('.update-role-button').hide()
 	$('.user_apps_roles_select').chosen().change ->
@@ -30,13 +31,15 @@ $ ->
   $('.user-change-default').chosen().change ->
     app = $(this).closest('tr').attr('class').split(" ")
     
-    if app[2]
-      selector_str = "." + app[0] + ".user-item"
+    if app[3]
+      selector_str = "." + app[0] + "." + app[2] + ".user-item"
       msg_str = $(selector_str + " > td:nth-child(2)").text() + ", " + $(selector_str + " > td:first").text() + " [" + $.trim($(selector_str + " > td:nth-child(5)").text()) + "]" + " will no longer be assigned as the default user."
       if (confirm(msg_str))
         $(this).parent('form').submit()
+      else
+        window.location.reload(true)
     else
-      selector_str = "." + app[1] + ".default_user"
+      selector_str = "." + app[1] + "." + app[2] + ".default_user"
       
       if $(selector_str).length > 0
         def_app_user = $(selector_str).attr('class').split(" ")

@@ -66,7 +66,7 @@ class Admin::UserAppsController < ApplicationController
     access_right = @user.access_rights.find_by_client_id(params[:application_id])
     
     if params[:user][:default] == 'True'
-      set_default_user_false(access_right.client_id)
+      set_default_user_false(access_right.client_id, @user.department)
       access_right.default_user = true
     else
       access_right.default_user = false
@@ -85,7 +85,7 @@ class Admin::UserAppsController < ApplicationController
     AccessRight.delete_all(["user_id = ? AND client_id = ?", user_id, client_id])
   end
   
-  def set_default_user_false(client_id) 
-    ActiveRecord::Base.connection.execute("UPDATE access_rights SET default_user='f' WHERE client_id=#{client_id}")
+  def set_default_user_false(client_id, department) 
+    ActiveRecord::Base.connection.execute("UPDATE access_rights SET default_user='f' WHERE client_id=#{client_id} AND user_id IN (SELECT id FROM users WHERE department = '#{department}')")
   end
 end

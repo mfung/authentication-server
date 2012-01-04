@@ -32,14 +32,4 @@ feature "Management Suite [admin]", %q{
     visit admin_apps_path
     page.should have_content "You do not have access"
   end
-  
-  scenario "View List of Users" do
-    @created_users = FactoryGirl.create_list(:user, 10)
-    FactoryGirl.create(:role_user)
-    @created_users[0].roles << :user
-    @created_users[0].save
-    visit admin_users_path
-    page.should have_css '.user_1', :count => 1
-    #save_and_open_page
-  end
 end
