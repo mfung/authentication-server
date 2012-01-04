@@ -37,13 +37,17 @@ $ ->
         $(this).parent('form').submit()
     else
       selector_str = "." + app[1] + ".default_user"
-      def_app_user = $(selector_str).attr('class').split(" ")
-      selector_str = "." + def_app_user[0] + ".user-item"
-      def_name = $(selector_str + " > td:nth-child(2)").text() + ", " + $(selector_str + " > td:first").text()
-      def_email = $.trim($(selector_str + " > td:nth-child(5)").text())
-      msg_str = def_name + " [" + def_email + "]\nWill no longer be assigned to be the default user."
       
-      if (confirm(msg_str))
+      if $(selector_str).length > 0
+        def_app_user = $(selector_str).attr('class').split(" ")
+        selector_str = "." + def_app_user[0] + ".user-item"
+        def_name = $(selector_str + " > td:nth-child(2)").text() + ", " + $(selector_str + " > td:first").text()
+        def_email = $.trim($(selector_str + " > td:nth-child(5)").text())
+        msg_str = def_name + " [" + def_email + "]\nWill no longer be assigned to be the default user."
+      
+        if (confirm(msg_str))
+          $(this).parent('form').submit()
+      else
         $(this).parent('form').submit()
     
   $('.change_default_form').bind 'ajax:success', (event, data, status, xhr) ->
